@@ -1,0 +1,23 @@
+{
+  "THE-123": {
+    "name": "Thein Win",
+    "gender": "M",
+    "age": 42,
+    "state": "Yangon",
+    "deceased date": "2021-05-20"
+  },
+  "MYI-556": {
+    "name": "Myint Wai",
+    "gender": "M",
+    "age": 53,
+    "state": "Mandalay",
+    "deceased date": "2021-02-21"
+  },
+  "THI-223": {
+    "name": "Thike Soe",
+    "gender": "M",
+    "age": 40,
+    "state": "Magway",
+    "deceased date": "2021-12-21"
+  }
+}
