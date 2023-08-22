@@ -1,7 +1,7 @@
-import { motion } from "framer-motion"
-
 import deceasedData from "../assets/deceased.json"
-import { useMemo, useState } from "react"
+import { DeceasedLineGraph } from "../graphs/DeceasedLineGraph"
+
+import { useMemo } from "react"
 export const Page1 = () => {
   const nameArrMemo: Array<string> = useMemo(() => {
     const nameArr: Array<string> = []
@@ -11,47 +11,51 @@ export const Page1 = () => {
     return nameArr
   }, [deceasedData])
 
-  const [tempArr, setTempArr] = useState(nameArrMemo.slice(0, 500))
+  const data = [
+    {
+      name: "Page A",
+      uv: 4000,
+      pv: 2400,
+      amt: 2400,
+    },
+    {
+      name: "Page B",
+      uv: 3000,
+      pv: 1398,
+      amt: 2210,
+    },
+    {
+      name: "Page C",
+      uv: 2000,
+      pv: 9800,
+      amt: 2290,
+    },
+    {
+      name: "Page D",
+      uv: 2780,
+      pv: 3908,
+      amt: 2000,
+    },
+    {
+      name: "Page E",
+      uv: 1890,
+      pv: 4800,
+      amt: 2181,
+    },
+    {
+      name: "Page F",
+      uv: 2390,
+      pv: 3800,
+      amt: 2500,
+    },
+    {
+      name: "Page G",
+      uv: 3490,
+      pv: 4300,
+      amt: 2100,
+    },
+  ]
 
-  //push the first 500 data to temp arr
-  const slicedArr = nameArrMemo.slice(0, 5)
-  console.log("SlicedArr: ", slicedArr)
-  // setTempArr(slicedArr)
-  console.log("Temp arr: ", tempArr)
-  const onAnimationComplete = () => {
-    console.log("Animation endeddd")
-  }
-  return (
-    <div>
-      <motion.div
-        style={{ backgroundColor: "lightgray" }}
-        initial={{ opacity: 1, y: "10vh" }} //0.2 99vh start from below and low opacity
-        animate={{ translateY: "-100%", opacity: 0.8, y: "100vh" }}
-        onAnimationComplete={onAnimationComplete}
-        transition={{
-          duration: 3, //600,
-          delay: 2,
-          repeat: Infinity,
-          repeatDelay: 3,
-          ease: "easeOut",
-        }}
-      >
-        {/* {nameArrMemo.map((e) => {
-          return <div> {e}</div>
-        })} */}
-
-        <div
-          style={{
-            display: "grid",
-            columnGap: "10px",
-            gridTemplateColumns: "auto auto auto auto ",
-          }}
-        >
-          {tempArr.map((e) => {
-            return <div style={{ display: "inline-grid" }}> {e}</div>
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
+  console.log("deceasedData: ", deceasedData)
+  return <DeceasedLineGraph data={data}></DeceasedLineGraph>
 }
