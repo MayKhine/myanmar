@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 
 import deceasedData from "../assets/deceased.json"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 export const Page1 = () => {
   const nameArrMemo: Array<string> = useMemo(() => {
     const nameArr: Array<string> = []
@@ -11,19 +11,47 @@ export const Page1 = () => {
     return nameArr
   }, [deceasedData])
 
+  const [tempArr, setTempArr] = useState(nameArrMemo.slice(0, 500))
+
+  //push the first 500 data to temp arr
+  const slicedArr = nameArrMemo.slice(0, 5)
+  console.log("SlicedArr: ", slicedArr)
+  // setTempArr(slicedArr)
+  console.log("Temp arr: ", tempArr)
+  const onAnimationComplete = () => {
+    console.log("Animation endeddd")
+  }
   return (
-    <motion.div
-      style={{ backgroundColor: "gray", originX: 0.6 }}
-      animate={{ translateY: "-100%" }}
-      transition={{
-        duration: 5,
-        // repeat: Infinity,
-        // repeatDelay: 3,
-      }}
-    >
-      {nameArrMemo.map((e) => {
-        return <div style={{ backgroundColor: "orange" }}> {e}</div>
-      })}
-    </motion.div>
+    <div>
+      <motion.div
+        style={{ backgroundColor: "lightgray" }}
+        initial={{ opacity: 1, y: "10vh" }} //0.2 99vh start from below and low opacity
+        animate={{ translateY: "-100%", opacity: 0.8, y: "100vh" }}
+        onAnimationComplete={onAnimationComplete}
+        transition={{
+          duration: 3, //600,
+          delay: 2,
+          repeat: Infinity,
+          repeatDelay: 3,
+          ease: "easeOut",
+        }}
+      >
+        {/* {nameArrMemo.map((e) => {
+          return <div> {e}</div>
+        })} */}
+
+        <div
+          style={{
+            display: "grid",
+            columnGap: "10px",
+            gridTemplateColumns: "auto auto auto auto ",
+          }}
+        >
+          {tempArr.map((e) => {
+            return <div style={{ display: "inline-grid" }}> {e}</div>
+          })}
+        </div>
+      </motion.div>
+    </div>
   )
 }
