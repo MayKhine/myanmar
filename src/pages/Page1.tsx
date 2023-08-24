@@ -2,13 +2,41 @@ import deceasedData from "../assets/deceased.json"
 import { DeceasedLineGraph } from "../graphs/DeceasedLineGraph"
 
 import { useMemo } from "react"
+import { Person } from "../interface"
+
 export const Page1 = () => {
-  const nameArrMemo: Array<string> = useMemo(() => {
-    const nameArr: Array<string> = []
-    deceasedData.data.table.rows.forEach((e) => {
-      nameArr.push(e.cellValuesByColumnId.fldHfL2UA8oU0Imne)
-    })
-    return nameArr
+  const deceasedDataMemo: Array<string> = useMemo(() => {
+    const ageOptions = deceasedData.data.table.columns[5].typeOptions!.choices
+    const genderOptions =
+      deceasedData.data.table.columns[4].typeOptions!.choices
+
+    console.log("Gender: ", genderOptions)
+
+    const deceasedDataArr: Array<Person> = []
+
+    const ageMap: Record<string, string> = {}
+    for (const [key, value] of Object.entries(ageOptions)) {
+      ageMap[key] = value.name
+    }
+
+    deceasedData.data.table.rows.forEach(
+      ({
+        cellValuesByColumnId: {
+          fldTKrApalVoFMKMh: id,
+          fldHfL2UA8oU0Imne: name,
+          fldoWIjKkayTFXAt5: ageOptionId,
+        },
+      }) => {
+        const person = {
+          id: id,
+          name: name,
+          age: ageMap[ageOptionId] || "unknown",
+        }
+        // console.log("person: ", person)
+        deceasedDataArr.push(person)
+      }
+    )
+    return deceasedDataArr
   }, [deceasedData])
 
   const data = [
