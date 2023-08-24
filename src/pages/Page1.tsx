@@ -1,12 +1,12 @@
 import deceasedData from "../assets/deceased.json"
-import { DeceasedLineGraph } from "../graphs/DeceasedLineGraph"
+import { DeceasedPerGenderBarGraph } from "../graphs/DeceasedPerGenderBarGraph"
 
 import { useMemo } from "react"
-import { Person } from "../interface"
+import { Person, dataPerGenderType } from "../interface"
 
 export const Page1 = () => {
   const deceasedDataArr: Array<Person> = []
-  const deceasedPerGender: Record<string, number> = {}
+  const deceasedPerGender: Array<dataPerGenderType> = []
 
   const deceasedDataMemo: Array<string> = useMemo(() => {
     const _deceasedPerGender: Record<string, number> = {}
@@ -23,10 +23,8 @@ export const Page1 = () => {
     const genderMap: Record<string, string> = {}
     for (const [key, value] of Object.entries(genderOptions)) {
       genderMap[key] = value.name
-      // _deceasedPerGender[key] = 0
     }
-    // console.log(genderOptions)
-    // console.log("_deceasedPerGender: ", _deceasedPerGender)
+
     //state map
     const stateOptions =
       deceasedData.data.table.columns[10].typeOptions!.choices
@@ -35,7 +33,6 @@ export const Page1 = () => {
       stateMap[key] = value.name
     }
 
-    // console.log(deceasedData)
     deceasedData.data.table.rows.forEach(
       ({
         cellValuesByColumnId: {
@@ -47,7 +44,7 @@ export const Page1 = () => {
           fld8LEP7Vo3kxhYA5: deceasedDate,
         },
       }) => {
-        const person = {
+        const person: Person = {
           id: id,
           name: name,
           age: ageMap[ageOptionId] || "unknown",
@@ -69,25 +66,24 @@ export const Page1 = () => {
 
     //deceasedPerGender update
     for (const [key, value] of Object.entries(_deceasedPerGender)) {
-      const gender = genderMap[key] || "unknown"
-      deceasedPerGender[gender] = value
+      const genderType = genderMap[key] || "unknown"
+      const gender: dataPerGenderType = {}
+      gender.genderType = genderType
+      gender.value = value
+      deceasedPerGender.push(gender)
     }
-    // console.log("_deceasedPerGender: ", _deceasedPerGender)
 
     return deceasedDataArr
   }, [deceasedData])
-
-  // console.log("deceasedDataArr: ", deceasedDataArr)
-  // console.log("deceasedPerGender: ", deceasedPerGender)
 
   //how many ppl died : gender
   //how many ppl died: age
   //how many ppl died: state
 
   return (
-    <DeceasedLineGraph
+    <DeceasedPerGenderBarGraph
       data={deceasedDataArr}
       dataPerGender={deceasedPerGender}
-    ></DeceasedLineGraph>
+    ></DeceasedPerGenderBarGraph>
   )
 }
