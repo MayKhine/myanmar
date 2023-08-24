@@ -14,7 +14,7 @@ export const CenteredDiv: FC<CenteredDivProps> = ({
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "center",
         alignSelf: "center",
         backgroundColor: backgroundColor,
