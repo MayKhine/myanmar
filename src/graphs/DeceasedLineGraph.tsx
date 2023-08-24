@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { DeceasedDataProps } from "../interface"
+import { Person, dataPerGenderProps } from "../interface"
 import {
   LineChart,
   Line,
@@ -11,10 +11,15 @@ import {
 } from "recharts"
 
 export type DeceasedLineGraphProps = {
-  data: Array<DeceasedDataProps>
+  data: Array<Person>
+  dataPerGender: dataPerGenderProps
 }
 
-export const DeceasedLineGraph: FC<DeceasedLineGraphProps> = ({ data }) => {
+export const DeceasedLineGraph: FC<DeceasedLineGraphProps> = ({
+  data,
+  dataPerGender,
+}) => {
+  console.log("In graph: ", dataPerGender)
   return (
     <LineChart
       width={500}
