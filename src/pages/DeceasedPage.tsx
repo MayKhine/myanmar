@@ -1,8 +1,10 @@
 import { FC } from "react"
-import { DataPerGenderType } from "../interface"
+import { BarGraphDataType } from "../interface"
 import { DeceasedPerGenderBarGraph } from "../graphs/DeceasedPerGenderBarGraph"
+import { BarGraph } from "../graphs/BarGraph"
+import { Bar } from "recharts"
 export type DeceasedPageProps = {
-  dataPerGender: Array<DataPerGenderType>
+  dataPerGender: Array<BarGraphDataType>
 }
 export const DeceasedPage: FC<DeceasedPageProps> = ({ dataPerGender }) => {
   return (
@@ -12,9 +14,7 @@ export const DeceasedPage: FC<DeceasedPageProps> = ({ dataPerGender }) => {
 
     <div>
       Deceased Page for graphs
-      <DeceasedPerGenderBarGraph
-        dataPerGender={dataPerGender}
-      ></DeceasedPerGenderBarGraph>
+      <BarGraph data={dataPerGender} width={500} height={500}></BarGraph>
     </div>
   )
 }

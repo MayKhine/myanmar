@@ -6,11 +6,11 @@ import { DeceasedPage } from "./pages/DeceasedPage"
 import { Page1 } from "./pages/Page1"
 
 import deceasedData from "./assets/deceased.json"
-
+import { Person, DataPerGenderType } from "./interface.ts"
 function App() {
   //data
   const deceasedDataArr: Array<Person> = []
-  const deceasedPerGender: Array<dataPerGenderType> = []
+  const deceasedPerGender: Array<DataPerGenderType> = []
   const deceasedDataMemo: Array<string> = useMemo(() => {
     const _deceasedPerGender: Record<string, number> = {}
 
@@ -70,8 +70,8 @@ function App() {
     //deceasedPerGender update
     for (const [key, value] of Object.entries(_deceasedPerGender)) {
       const genderType = genderMap[key] || "unknown"
-      const gender: dataPerGenderType = {}
-      gender.genderType = genderType
+      const gender: DataPerGenderType = {}
+      gender.type = genderType
       gender.value = value
       deceasedPerGender.push(gender)
     }
@@ -92,7 +92,7 @@ function App() {
             <DeceasedPage dataPerGender={deceasedPerGender}></DeceasedPage>
           </Parallax>
           <Parallax style={{ height: "100vh" }}>
-            <div style={{ backgroundColor: "red" }}>whow</div>
+            <div style={{ backgroundColor: "red", height: "100vh" }}>whow</div>
           </Parallax>
         </>
       )}

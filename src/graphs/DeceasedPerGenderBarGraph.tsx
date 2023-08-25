@@ -12,7 +12,11 @@ export const DeceasedPerGenderBarGraph: FC<DeceasedLineGraphProps> = ({
   const width = 500
   return (
     <>
-      <GraphTitle graphTitle={"Deceased per gender"} width={width} />
+      <GraphTitle
+        graphTitle={"Deceased per gender"}
+        width={width}
+        bgColor={"lightgray"}
+      />
       <BarChart
         width={width}
         height={width}

@@ -18,3 +18,8 @@ export type DataPerGenderType = {
   genderType: string
   value: number
 }
+
+export type BarGraphDataType = {
+  type: string
+  value: number
+}
