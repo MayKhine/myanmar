@@ -14,7 +14,7 @@ export type dataPerGenderProps = {
   LGBT: number
 }
 
-export type dataPerGenderType = {
+export type DataPerGenderType = {
   genderType: string
   value: number
 }
