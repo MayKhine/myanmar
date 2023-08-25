@@ -3,16 +3,19 @@ import { useState, useMemo } from "react"
 
 import { IntroPage } from "./pages/IntroPage"
 import { DeceasedPage } from "./pages/DeceasedPage"
-import { Page1 } from "./pages/Page1"
-
+// import { TreeMap } from "./graphs/TreeMap"
+import { PieChartGraph } from "./graphs/PieChartGraph"
 import deceasedData from "./assets/deceased.json"
-import { Person, DataPerGenderType } from "./interface.ts"
+import { Person, BarGraphDataType, TreeMapDataType } from "./interface.ts"
 function App() {
   //data
-  const deceasedDataArr: Array<Person> = []
-  const deceasedPerGender: Array<DataPerGenderType> = []
-  const deceasedDataMemo: Array<string> = useMemo(() => {
+  const deceasedPerGender: Array<BarGraphDataType> = []
+  const deceasedPerAge: Array<TreeMapDataType> = []
+
+  const deceasedDataMemo: Array<Person> = useMemo(() => {
     const _deceasedPerGender: Record<string, number> = {}
+    const _deceasedPerAge: Record<string, number> = {}
+    const deceasedDataArr: Array<Person> = []
 
     //age map
     const ageOptions = deceasedData.data.table.columns[5].typeOptions!.choices
@@ -64,23 +67,40 @@ function App() {
         } else {
           _deceasedPerGender[genderOptionId] = 1
         }
+
+        if (_deceasedPerAge[ageOptionId]) {
+          _deceasedPerAge[ageOptionId] = _deceasedPerAge[ageOptionId] + 1
+        } else {
+          _deceasedPerAge[ageOptionId] = 1
+        }
       }
     )
 
     //deceasedPerGender update
     for (const [key, value] of Object.entries(_deceasedPerGender)) {
       const genderType = genderMap[key] || "unknown"
-      const gender: DataPerGenderType = {}
+      const gender: BarGraphDataType = {}
       gender.type = genderType
       gender.value = value
       deceasedPerGender.push(gender)
     }
 
+    //deceasedPerAge update
+    for (const [key, value] of Object.entries(_deceasedPerAge)) {
+      const ageType = ageMap[key] || "unknown"
+      const age: TreeMapDataType = {}
+      age.name = ageType
+      age.size = value
+      // age.order = Number(ageType) || 999
+      deceasedPerAge.push(age)
+    }
     return deceasedDataArr
   }, [deceasedData])
 
   const [nextPage, setNextPage] = useState<boolean>(false)
 
+  console.log("deceasedPerGender in app: ", deceasedPerGender) // data seems to appear blank after reloading
+  console.log("Memoed data: ", deceasedDataMemo)
   return (
     <>
       <Parallax style={{ height: "100vh" }}>
@@ -89,10 +109,16 @@ function App() {
       {nextPage && (
         <>
           <Parallax style={{ height: "100%", backgroundColor: "gray" }}>
-            <DeceasedPage dataPerGender={deceasedPerGender}></DeceasedPage>
+            <DeceasedPage
+              dataPerGender={deceasedPerGender}
+              // dataPerAge={deceasedPerAge}
+            ></DeceasedPage>
           </Parallax>
           <Parallax style={{ height: "100vh" }}>
-            <div style={{ backgroundColor: "red", height: "100vh" }}>whow</div>
+            <div style={{ backgroundColor: "lightGray", height: "100vh" }}>
+              {/* <TreeMap data={deceasedPerAge}></TreeMap> */}
+              <PieChartGraph></PieChartGraph>
+            </div>
           </Parallax>
         </>
       )}

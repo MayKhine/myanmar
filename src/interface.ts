@@ -22,4 +22,15 @@ export type DataPerGenderType = {
 export type BarGraphDataType = {
   type: string
   value: number
+  // order?: number
+}
+
+export type TreeMapDataType = {
+  name: string
+  size: number
+}
+
+export type PieChartDataType = {
+  name: string
+  value: number
 }
